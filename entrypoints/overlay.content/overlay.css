@@ -1,0 +1,467 @@
+/* Shadow DOM root reset */
+:host {
+  all: initial;
+  display: block;
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Backdrop ─────────────────────────────────────────────────────────────── */
+.sph-backdrop {
+  pointer-events: auto;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  z-index: 0;
+}
+
+/* ─── Dialog ────────────────────────────────────────────────────────────────── */
+.sph-dialog {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 600px;
+  max-width: 92vw;
+  max-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.15);
+  outline: none;
+  color: #1a1a1a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ─── Search bar ────────────────────────────────────────────────────────────── */
+.sph-search-bar {
+  flex-shrink: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sph-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  padding: 14px 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+}
+
+.sph-search-input::placeholder {
+  color: #9ca3af;
+}
+
+/* ─── Prompt list ───────────────────────────────────────────────────────────── */
+.sph-prompt-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.sph-prompt-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sph-prompt-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sph-prompt-list::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+/* ─── Prompt item ───────────────────────────────────────────────────────────── */
+.sph-prompt-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.1s;
+  position: relative;
+}
+
+.sph-prompt-item:last-child {
+  border-bottom: none;
+}
+
+.sph-prompt-item:hover {
+  background: #f9fafb;
+}
+
+.sph-prompt-item.is-active {
+  background: #eff6ff;
+}
+
+.sph-prompt-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.sph-prompt-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sph-prompt-body {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* ─── Row action buttons (hover-visible) ────────────────────────────────────── */
+.sph-prompt-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sph-prompt-item:hover .sph-prompt-actions,
+.sph-prompt-item.is-active .sph-prompt-actions {
+  opacity: 1;
+}
+
+/* ─── Inline delete confirm ─────────────────────────────────────────────────── */
+.sph-prompt-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.sph-confirm-text {
+  font-size: 12px;
+  color: #dc2626;
+  white-space: nowrap;
+}
+
+/* ─── Empty state ───────────────────────────────────────────────────────────── */
+.sph-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────────────── */
+.sph-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.1s,
+    border-color 0.1s;
+  line-height: 1.4;
+}
+
+.sph-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.sph-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sph-btn--primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+.sph-btn--primary:hover:not(:disabled) {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.sph-btn--danger {
+  background: #ffffff;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+.sph-btn--danger:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #dc2626;
+}
+
+.sph-btn--sm {
+  padding: 3px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+/* ─── Footer ────────────────────────────────────────────────────────────────── */
+.sph-footer {
+  flex-shrink: 0;
+  border-top: 1px solid #e5e7eb;
+  padding: 10px 16px;
+  background: #f9fafb;
+}
+
+.sph-footer-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sph-import-confirm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sph-import-text {
+  font-size: 13px;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+/* ─── Edit form ─────────────────────────────────────────────────────────────── */
+.sph-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 20px 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.sph-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sph-form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sph-form-input,
+.sph-form-textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #111827;
+  background: #ffffff;
+  outline: none;
+  resize: vertical;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  line-height: 1.5;
+}
+
+.sph-form-input:focus,
+.sph-form-textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.sph-form-textarea {
+  min-height: 120px;
+}
+
+.sph-form-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+/* ─── Toast ─────────────────────────────────────────────────────────────────── */
+.sph-toast {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  animation: sph-fade-in 0.15s ease;
+}
+
+.sph-toast--success {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.sph-toast--error {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+@keyframes sph-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ─── Dark mode ─────────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  .sph-dialog {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.6),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .sph-search-bar {
+    border-bottom-color: #313244;
+  }
+
+  .sph-search-input {
+    color: #cdd6f4;
+  }
+
+  .sph-search-input::placeholder {
+    color: #585b70;
+  }
+
+  .sph-prompt-list::-webkit-scrollbar-thumb {
+    background: #45475a;
+  }
+
+  .sph-prompt-item {
+    border-bottom-color: #313244;
+  }
+
+  .sph-prompt-item:hover {
+    background: #27273a;
+  }
+
+  .sph-prompt-item.is-active {
+    background: #1d3a5f;
+  }
+
+  .sph-prompt-title {
+    color: #cdd6f4;
+  }
+
+  .sph-prompt-body {
+    color: #7f849c;
+  }
+
+  .sph-footer {
+    background: #181825;
+    border-top-color: #313244;
+  }
+
+  .sph-btn {
+    background: #313244;
+    border-color: #45475a;
+    color: #cdd6f4;
+  }
+
+  .sph-btn:hover {
+    background: #45475a;
+    border-color: #6c7086;
+  }
+
+  .sph-btn--primary {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+  }
+
+  .sph-btn--primary:hover:not(:disabled) {
+    background: #2563eb;
+    border-color: #2563eb;
+  }
+
+  .sph-btn--danger {
+    background: transparent;
+    border-color: #f38ba8;
+    color: #f38ba8;
+  }
+
+  .sph-btn--danger:hover:not(:disabled) {
+    background: rgba(243, 139, 168, 0.1);
+  }
+
+  .sph-empty {
+    color: #6c7086;
+  }
+
+  .sph-confirm-text {
+    color: #f38ba8;
+  }
+
+  .sph-import-text {
+    color: #cdd6f4;
+  }
+
+  .sph-form-input,
+  .sph-form-textarea {
+    background: #27273a;
+    border-color: #45475a;
+    color: #cdd6f4;
+  }
+
+  .sph-form-input:focus,
+  .sph-form-textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  .sph-form-label {
+    color: #7f849c;
+  }
+}
