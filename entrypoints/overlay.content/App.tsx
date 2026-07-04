@@ -34,6 +34,10 @@ export default function App({ onClose }: AppProps) {
   const [query, setQuery] = useState('');
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  // Only highlight the active row once the user actually navigates with the
+  // keyboard. Otherwise the top row looks permanently focused on open / while
+  // using the mouse. Cleared on typing and pointer movement (see below).
+  const [usingKeyboard, setUsingKeyboard] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
   const [pendingImport, setPendingImport] = useState<PendingImport | null>(null);
 
@@ -121,11 +125,13 @@ export default function App({ onClose }: AppProps) {
       }
       if (e.key === 'ArrowDown') {
         e.preventDefault();
+        setUsingKeyboard(true);
         setActiveIndex((prev) => Math.min(prev + 1, filteredPrompts.length - 1));
         return;
       }
       if (e.key === 'ArrowUp') {
         e.preventDefault();
+        setUsingKeyboard(true);
         setActiveIndex((prev) => Math.max(prev - 1, 0));
         return;
       }
@@ -167,11 +173,13 @@ export default function App({ onClose }: AppProps) {
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
+    // Human-readable timestamp down to the minute, e.g. 2026-05-18-12-00
     const now = new Date();
-    const yyyyMMdd = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}`;
     const a = document.createElement('a');
     a.href = url;
-    a.download = `sph-prompts-${yyyyMMdd}.json`;
+    a.download = `simple-prompt-holder-backup-${stamp}.json`;
     a.click();
     URL.revokeObjectURL(url);
     showToast('エクスポートしました', 'success');
@@ -226,6 +234,13 @@ export default function App({ onClose }: AppProps) {
   const handleQueryChange = useCallback((value: string) => {
     setQuery(value);
     setActiveIndex(0);
+    setUsingKeyboard(false);
+  }, []);
+
+  // Hand control back to the mouse (hover styling) once the pointer moves.
+  // Functional update so no re-render happens while already mouse-driven.
+  const handlePointerActivity = useCallback(() => {
+    setUsingKeyboard((prev) => (prev ? false : prev));
   }, []);
 
   const handleCancelImport = useCallback(() => {
@@ -260,10 +275,11 @@ export default function App({ onClose }: AppProps) {
             <PromptList
               prompts={filteredPrompts}
               allPrompts={prompts}
-              activeIndex={activeIndex}
+              activeIndex={usingKeyboard ? activeIndex : -1}
               onCopy={copyToClipboard}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              onPointerActivity={handlePointerActivity}
             />
             <div className="sph-footer">
               {pendingImport ? (

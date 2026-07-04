@@ -9,6 +9,7 @@ interface PromptListProps {
   onCopy: (body: string) => void;
   onEdit: (prompt: Prompt) => void;
   onDelete: (id: string) => void;
+  onPointerActivity: () => void;
 }
 
 export default function PromptList({
@@ -18,6 +19,7 @@ export default function PromptList({
   onCopy,
   onEdit,
   onDelete,
+  onPointerActivity,
 }: PromptListProps) {
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +42,7 @@ export default function PromptList({
   }
 
   return (
-    <div role="listbox" className="sph-prompt-list" ref={listRef}>
+    <div role="listbox" className="sph-prompt-list" ref={listRef} onPointerMove={onPointerActivity}>
       {prompts.map((prompt, index) => (
         <PromptItem
           key={prompt.id}

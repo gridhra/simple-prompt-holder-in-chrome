@@ -2,6 +2,13 @@
 :host {
   all: initial;
   display: block;
+  /* Own the top of the page stacking order. `all: initial` above resets
+     position/z-index, so these must come after to take effect. Without a
+     positioned host with a maximal z-index, page elements with their own
+     z-index (sticky headers, chat widgets, cookie banners) paint over us. */
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
   font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 
