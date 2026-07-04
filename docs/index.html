@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Simple Prompt Holder</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1.25rem 4rem;
+      font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.75;
+    }
+    h1 { font-size: 1.6rem; line-height: 1.3; }
+    h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid rgba(128,128,128,.3); padding-bottom: .3rem; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
+    .updated { color: #888; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <h1>プライバシーポリシー / Privacy Policy — Simple Prompt Holder</h1>
+  <p class="updated">最終更新日: 2026-07-04</p>
+
+  <h2>概要</h2>
+  <p>
+    Simple Prompt Holder（以下「本拡張機能」）は、ユーザーが頻繁に使うプロンプト文を保存・検索し、
+    クリップボードへコピーするための Chrome 拡張機能です。本拡張機能はユーザーのプライバシーを最優先します。
+  </p>
+
+  <h2>収集・送信する情報</h2>
+  <p><strong>本拡張機能は、いかなる個人情報・利用データも収集、送信、共有しません。</strong></p>
+  <ul>
+    <li>外部サーバーとの通信を一切行いません。</li>
+    <li>アナリティクス、トラッキング、広告 SDK を一切含みません。</li>
+    <li>閲覧中のウェブページの内容を読み取ったり送信したりしません。</li>
+  </ul>
+
+  <h2>データの保存</h2>
+  <p>
+    ユーザーが登録したプロンプト（タイトル・本文・タグ）は、<code>chrome.storage.local</code> を用いて
+    <strong>ユーザーの端末内にのみ</strong>保存されます。このデータが端末外に送信されることはありません。
+    エクスポート機能で出力される JSON ファイルは、ユーザー自身の操作によりユーザーのローカル環境に
+    保存されるものです。
+  </p>
+
+  <h2>権限の利用目的</h2>
+  <ul>
+    <li><strong>storage</strong>: プロンプトを端末内にローカル保存するために使用します。</li>
+    <li><strong>clipboardWrite</strong>: 選択したプロンプト本文をクリップボードへコピーするために使用します。</li>
+    <li><strong>ホストアクセス（全 URL）</strong>: 任意のウェブページ上でオーバーレイ UI を表示するためにのみ使用します。ページ内容の読み取り・収集・送信は行いません。</li>
+  </ul>
+
+  <h2>データの削除</h2>
+  <p>
+    保存されたプロンプトは、拡張機能の UI から個別に削除できます。拡張機能をアンインストールすると、
+    <code>chrome.storage.local</code> 内のデータもすべて削除されます。
+  </p>
+
+  <h2>お問い合わせ</h2>
+  <p>
+    本ポリシーに関するお問い合わせは、GitHub リポジトリの Issue または下記メールアドレスまでご連絡ください。
+  </p>
+  <ul>
+    <li>Email: aquila.minakami@gmail.com</li>
+  </ul>
+
+  <h2>改訂</h2>
+  <p>
+    本ポリシーは予告なく改訂される場合があります。重要な変更がある場合は本ページで告知します。
+  </p>
+</body>
+</html>
