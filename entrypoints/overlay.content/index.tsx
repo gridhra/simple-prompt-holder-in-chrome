@@ -12,10 +12,17 @@ export default defineContentScript({
     let visible = false;
     let root: Root | null = null;
 
+    // dev サーバー時のみ検証用の仕掛け (open shadow root / sph:toggle フック) を有効化する。
+    // 本番ビルドではページ側 JS から shadowRoot を読めない closed にし、
+    // プログラム的マウント経路 (sph:toggle) も塞いでプロンプト窃取を防ぐ。
+    const isDev = import.meta.env.COMMAND === 'serve';
+
     const ui = await createShadowRootUi(ctx, {
       name: 'sph-overlay',
       position: 'overlay',
-      zIndex: 2147483646,
+      zIndex: 2147483647,
+      // 本番は closed: ページの document.querySelector('sph-overlay').shadowRoot を無効化。
+      mode: isDev ? 'open' : 'closed',
       onMount(container) {
         root = createRoot(container);
         root.render(<App onClose={hide} />);
@@ -72,8 +79,12 @@ export default defineContentScript({
     );
 
     // (4) 自動化・検証用フック: window.dispatchEvent(new CustomEvent('sph:toggle'))
-    ctx.addEventListener(window as unknown as EventTarget, 'sph:toggle', () => {
-      toggle();
-    });
+    // dev サーバー時のみ登録する。本番でこれを残すと、任意のページが overlay を
+    // 強制マウントし open shadow 経由で全プロンプトを読み取れてしまうため除外する。
+    if (isDev) {
+      ctx.addEventListener(window as unknown as EventTarget, 'sph:toggle', () => {
+        toggle();
+      });
+    }
   },
 });
